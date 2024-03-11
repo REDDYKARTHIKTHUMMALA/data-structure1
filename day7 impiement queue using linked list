@@ -1,0 +1,88 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Node {
+    int data;
+    struct Node* next;
+};
+
+struct Queue {
+    struct Node *front, *rear;
+};
+
+struct Node* newNode(int data) {
+    struct Node* temp = (struct Node*)malloc(sizeof(struct Node));
+    temp->data = data;
+    temp->next = NULL;
+    return temp;
+}
+
+struct Queue* createQueue() {
+    struct Queue* queue = (struct Queue*)malloc(sizeof(struct Queue));
+    queue->front = queue->rear = NULL;
+    return queue;
+}
+
+void Enqueue(struct Queue* queue, int data) {
+    struct Node* temp = newNode(data);
+
+    if (queue->rear == NULL) {
+        queue->front = queue->rear = temp;
+        return;
+    }
+
+    queue->rear->next = temp;
+    queue->rear = temp;
+}
+
+void Dequeue(struct Queue* queue) {
+    if (queue->front == NULL)
+        return;
+
+    struct Node* temp = queue->front;
+    queue->front = queue->front->next;
+
+    if (queue->front == NULL)
+        queue->rear = NULL;
+
+    free(temp);
+}
+
+void Display(struct Queue* queue) {
+    struct Node* temp = queue->front;
+    while (temp != NULL) {
+        printf("%d ", temp->data);
+        temp = temp->next;
+    }
+    printf("\n");
+}
+
+int Front(struct Queue* queue) {
+    if (queue->front == NULL)
+        return -1;
+    return queue->front->data;
+}
+
+int Rear(struct Queue* queue) {
+    if (queue->rear == NULL)
+        return -1;
+    return queue->rear->data;
+}
+
+int main() {
+	printf("192372088 karthik/n");
+    struct Queue* queue = createQueue();
+
+    Enqueue(queue, 10);
+    Enqueue(queue, 20);
+    Enqueue(queue, 30);
+
+    Display(queue);
+
+    Dequeue(queue);
+
+    printf("Front element: %d\n", Front(queue));
+    printf("Rear element: %d\n", Rear(queue));
+
+    return 0;
+}
