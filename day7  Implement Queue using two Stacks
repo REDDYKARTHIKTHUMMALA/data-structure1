@@ -1,0 +1,57 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define SIZE 5
+
+struct Stack {
+    int items[SIZE];
+    int top;
+};
+
+struct Stack s1, s2;
+
+void push(struct Stack *s, int value) {
+    s->items[++s->top] = value;
+}
+
+int pop(struct Stack *s) {
+    return s->items[s->top--];
+}
+
+void enqueue(int value) {
+    push(&s1, value);
+}
+
+int dequeue() {
+    int value;
+
+    if (s2.top == -1) {
+        if (s1.top == -1) {
+            printf("Queue is empty\n");a
+            exit(0);
+        }
+
+        while (s1.top != -1) {
+            push(&s2, pop(&s1));
+        }
+    }
+
+    value = pop(&s2);
+    return value;
+}
+
+int main() {
+	printf("192372088 karthik/n");
+    s1.top = -1;
+    s2.top = -1;
+
+    enqueue(1);
+    enqueue(8);
+    enqueue(3);
+
+    printf("%d ", dequeue());
+    printf("%d ", dequeue());
+    printf("%d ", dequeue());
+
+    return 0;
+}
