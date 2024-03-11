@@ -1,0 +1,85 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Node {
+    int data;
+    struct Node* next;
+};
+
+struct Queue {
+    struct Node *front, *rear;
+};
+
+void Enqueue(struct Queue* q, int value) {
+    struct Node* temp = (struct Node*)malloc(sizeof(struct Node));
+    temp->data = value;
+    if (q->front == NULL) {
+        q->front = temp;
+    } else {
+        q->rear->next = temp;
+    }
+    q->rear = temp;
+    q->rear->next = q->front;
+}
+
+void Dequeue(struct Queue* q) {
+    if (q->front == NULL) {
+        printf("Queue is empty\n");
+    } else {
+        if (q->front == q->rear) {
+            free(q->front);
+            q->front = NULL;
+            q->rear = NULL;
+        } else {
+            struct Node* temp = q->front;
+            q->front = q->front->next;
+            q->rear->next = q->front;
+            free(temp);
+        }
+    }
+}
+
+void Display(struct Queue* q) {
+    struct Node* temp = q->front;
+    if (q->front == NULL) {
+        printf("Queue is empty\n");
+    } else {
+        do {
+            printf("%d ", temp->data);
+            temp = temp->next;
+        } while (temp != q->front);
+        printf("\n");
+    }
+}
+
+int Front(struct Queue* q) {
+    if (q->front == NULL) {
+        printf("Queue is empty\n");
+        return -1;
+    } else {
+        return q->front->data;
+    }
+}
+
+int Rear(struct Queue* q) {
+    if (q->rear == NULL) {
+        printf("Queue is empty\n");
+        return -1;
+    } else {
+        return q->rear->data;
+    }
+}
+
+int main() {
+	printf("karthik 192372088/n");
+    struct Queue q = {NULL, NULL};
+    Enqueue(&q, 1);
+    Enqueue(&q, 2);
+    Enqueue(&q, 3);
+    Display(&q);
+    printf("Front element: %d\n", Front(&q));
+    printf("Rear element: %d\n", Rear(&q));
+    Dequeue(&q);
+    Display(&q);
+    return 0;
+}
